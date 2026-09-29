@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>POS Billing System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top right, #1e3a8a 0%, transparent 35%),
+                radial-gradient(circle at bottom left, #0f766e 0%, transparent 30%),
+                #080b12;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb, #06b6d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(37,99,235,0.35);
+        }
+
+        .logo h2 {
+            font-size: 20px;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 3px;
+        }
+
+        .admin-btn {
+            text-decoration: none;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.25s;
+        }
+
+        .admin-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 75px 0 50px;
+            text-align: center;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 50px;
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.25);
+            color: #4ade80;
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 12px #22c55e;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 68px);
+            line-height: 1.05;
+            margin-bottom: 20px;
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #93c5fd,
+                #67e8f9
+            );
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #94a3b8;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+     
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 55px;
+        }
+
+        .stat-card {
+            padding: 24px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+        }
+
+        .stat-card small {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .stat-card h3 {
+            font-size: 28px;
+            margin-top: 8px;
+        }
+
+       
+
+        .section-title {
+            margin-bottom: 22px;
+        }
+
+        .section-title h2 {
+            font-size: 25px;
+        }
+
+        .section-title p {
+            color: #64748b;
+            margin-top: 6px;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .module {
+            text-decoration: none;
+            color: white;
+            padding: 25px;
+            min-height: 150px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.045);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            right: -40px;
+            bottom: -40px;
+            border-radius: 50%;
+            background: rgba(59,130,246,0.15);
+        }
+
+        .module:hover {
+            transform: translateY(-6px);
+            border-color: rgba(96,165,250,0.45);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .module-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb, #0891b2);
+            font-size: 20px;
+            margin-bottom: 18px;
+        }
+
+        .module h3 {
+            font-size: 17px;
+            margin-bottom: 7px;
+        }
+
+        .module p {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+
+
+        footer {
+            margin-top: 70px;
+            padding: 25px 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+            .modules {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .modules {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 50px;
+            }
+
+            .navbar {
+                height: 65px;
+            }
+
+            .admin-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ₹
+            </div>
+
+            <div>
+                <h2>POS Billing</h2>
+                <span>Management System</span>
+            </div>
+
+        </div>
+
+        <a href="/admin/" class="admin-btn">
+            Admin Panel →
+        </a>
+
+    </nav>
+
+
+
+    <section class="hero">
+
+        <div class="status">
+            <span class="status-dot"></span>
+            System Online
+        </div>
+
+        <h1>
+            POS Billing System
+        </h1>
+
+        <p>
+            Manage your billing, products, suppliers, transactions,
+            staff and business reports from one centralized system.
+        </p>
+
+    </section>
+
+
+    
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <small>Backend Status</small>
+            <h3>Online</h3>
+        </div>
+
+        <div class="stat-card">
+            <small>API Status</small>
+            <h3>Connected</h3>
+        </div>
+
+        <div class="stat-card">
+            <small>System</small>
+            <h3>Django REST</h3>
+        </div>
+
+    </section>
+
+
+
+    <div class="section-title">
+
+        <h2>System Modules</h2>
+
+        <p>
+            Access your POS management modules
+        </p>
+
+    </div>
+
+
+    <section class="modules">
+
+        <a href="/api/billing/" class="module">
+
+            <div class="module-icon">
+                🧾
+            </div>
+
+            <h3>Billing</h3>
+
+            <p>
+                Create and manage customer invoices and bills.
+            </p>
+
+        </a>
+
+
+        <a href="/api/suppliers/" class="module">
+
+            <div class="module-icon">
+                📦
+            </div>
+
+            <h3>Suppliers</h3>
+
+            <p>
+                Manage suppliers and supplier information.
+            </p>
+
+        </a>
+
+
+        <a href="/api/staff/" class="module">
+
+            <div class="module-icon">
+                👥
+            </div>
+
+            <h3>Staff</h3>
+
+            <p>
+                Manage employees and staff records.
+            </p>
+
+        </a>
+
+
+        <a href="/api/transactions/" class="module">
+
+            <div class="module-icon">
+                💳
+            </div>
+
+            <h3>Transactions</h3>
+
+            <p>
+                View and manage business transactions.
+            </p>
+
+        </a>
+
+
+        <a href="/api/returns/" class="module">
+
+            <div class="module-icon">
+                ↩️
+            </div>
+
+            <h3>Returns</h3>
+
+            <p>
+                Handle product returns and refund records.
+            </p>
+
+        </a>
+
+
+        <a href="/api/ledger/" class="module">
+
+            <div class="module-icon">
+                📒
+            </div>
+
+            <h3>Ledger</h3>
+
+            <p>
+                Track financial ledger entries and records.
+            </p>
+
+        </a>
+
+
+        <a href="/api/reports/" class="module">
+
+            <div class="module-icon">
+                📊
+            </div>
+
+            <h3>Reports</h3>
+
+            <p>
+                View business reports and financial information.
+            </p>
+
+        </a>
+
+
+        <a href="/admin/" class="module">
+
+            <div class="module-icon">
+                ⚙️
+            </div>
+
+            <h3>Administration</h3>
+
+            <p>
+                Configure and manage the Django backend.
+            </p>
+
+        </a>
+
+    </section>
+
+
+
+    <footer>
+
+        POS Billing System &nbsp;•&nbsp;
+        Django REST Framework
+
+    </footer>
+
+</div>
+
+</body>
+</html>
